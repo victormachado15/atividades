@@ -3,94 +3,238 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portal de Atividades | Professor Victor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Portal de atividades e materiais didáticos do Professor Victor.">
+  <title>Portal do Aluno | Professor Victor</title>
   <style>
+    :root {
+      --navy: #1c2c5b;
+      --blue: #3158a5;
+      --bg: #f2f5fa;
+      --text: #26334b;
+      --muted: #64718a;
+      --white: #ffffff;
+    }
+
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f2f5fa;
-      color: #243047;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
 
     header {
-      background: #1c2c5b;
+      background: linear-gradient(135deg, #1c2c5b, #3158a5);
       color: white;
-      padding: 36px 20px;
+      padding: 46px 20px;
       text-align: center;
     }
 
-    header h1 { margin: 0 0 10px; }
-    header p { margin: 0; }
+    header h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 5vw, 42px);
+    }
 
-    main {
-      max-width: 900px;
-      margin: 30px auto;
+    header p {
+      max-width: 650px;
+      margin: auto;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 32px auto;
       padding: 0 18px;
     }
 
-    .card {
-      background: white;
-      border-radius: 12px;
+    .intro {
+      background: var(--white);
+      border-radius: 14px;
       padding: 24px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 12px #15264a12;
+      margin-bottom: 28px;
+      box-shadow: 0 3px 14px #15264a10;
     }
 
-    .card h2 { margin-top: 0; color: #1c2c5b; }
+    .intro h2 { margin-top: 0; color: var(--navy); }
 
-    .status {
+    .section-title {
+      color: var(--navy);
+      margin: 32px 0 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(245px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 23px;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px #15264a10;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card h3 {
+      color: var(--navy);
+      margin: 8px 0;
+    }
+
+    .icon { font-size: 32px; }
+
+    .card p {
+      color: var(--muted);
+      flex-grow: 1;
+    }
+
+    .tag {
       display: inline-block;
+      align-self: flex-start;
+      background: #e8edf8;
+      color: var(--navy);
+      border-radius: 20px;
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .tag.ready {
       background: #e0f5e8;
       color: #17643b;
-      padding: 7px 12px;
-      border-radius: 20px;
-      font-size: 14px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--navy);
+      color: white;
+      padding: 11px 15px;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .button:hover { background: var(--blue); }
+
+    .button.disabled {
+      background: #e6e9f0;
+      color: #59657b;
+      cursor: default;
+    }
+
+    .notice {
+      background: #fff8df;
+      border-left: 4px solid #d7a42b;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 28px;
     }
 
     footer {
+      background: var(--navy);
+      color: white;
       text-align: center;
-      padding: 24px;
-      color: #637087;
+      padding: 25px 18px;
+      margin-top: 45px;
+    }
+
+    footer p { margin: 4px; }
+
+    a:focus-visible {
+      outline: 3px solid #e0ad36;
+      outline-offset: 3px;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Portal de Atividades</h1>
-    <p>Professor Victor de Andrade Machado</p>
-  </header>
 
-  <main>
-    <section class="card">
-      <span class="status">Portal em construção</span>
-      <h2>Bem-vindos!</h2>
-      <p>
-        Este é o espaço para acessar atividades práticas,
-        exercícios e materiais de nossas aulas.
-      </p>
-    </section>
+<header>
+  <h1>🎓 Portal do Aluno</h1>
+  <p>Atividades práticas, desafios e materiais de estudo com o Professor Victor de Andrade Machado.</p>
+</header>
 
-    <section class="card">
-      <h2>Segurança da Informação</h2>
-      <p>Em breve: exercícios e desafios sobre segurança digital.</p>
-    </section>
+<main class="container">
 
-    <section class="card">
-      <h2>Gestão de Sistemas Operacionais</h2>
-      <p>Em breve: atividades práticas com comandos do Windows.</p>
-    </section>
+  <section class="intro">
+    <h2>Bem-vindo ao nosso espaço de aprendizagem!</h2>
+    <p>
+      Aqui você encontrará atividades para praticar os conteúdos
+      estudados em aula, desenvolver habilidades e testar seus conhecimentos.
+    </p>
+    <p>Escolha uma disciplina e bons estudos! 🚀</p>
+  </section>
 
-    <section class="card">
-      <h2>Redes e Internet</h2>
-      <p>Em breve: exercícios sobre redes, protocolos e serviços.</p>
-    </section>
-  </main>
+  <h2 class="section-title">📚 Disciplinas e atividades</h2>
 
-  <footer>
-    Portal educacional • Professor Victor
-  </footer>
+  <section class="grid" aria-label="Catálogo de atividades">
+
+    <article class="card">
+      <span class="icon">🔐</span>
+      <span class="tag ready">Atividade disponível</span>
+      <h3>Segurança da Informação</h3>
+      <p>Pratique conceitos de confidencialidade, integridade, phishing, backup e ataques de negação de serviço.</p>
+      <a class="button" href="./seguranca/">Acessar atividade</a>
+    </article>
+
+    <article class="card">
+      <span class="icon">💻</span>
+      <span class="tag">Em breve</span>
+      <h3>Gestão de Sistemas Operacionais</h3>
+      <p>Exercícios com comandos do Windows CMD, arquivos, diretórios e administração básica do sistema.</p>
+      <span class="button disabled">Em preparação</span>
+    </article>
+
+    <article class="card">
+      <span class="icon">🌐</span>
+      <span class="tag">Em breve</span>
+      <h3>Redes de Computadores</h3>
+      <p>Desafios sobre protocolos, endereçamento IP, serviços de rede e comunicação entre dispositivos.</p>
+      <span class="button disabled">Em preparação</span>
+    </article>
+
+    <article class="card">
+      <span class="icon">📡</span>
+      <span class="tag">Em breve</span>
+      <h3>Internet das Coisas — IoT</h3>
+      <p>Explore sensores, atuadores, automação e lógica de funcionamento de sistemas inteligentes.</p>
+      <span class="button disabled">Em preparação</span>
+    </article>
+
+    <article class="card">
+      <span class="icon">🐍</span>
+      <span class="tag">Em breve</span>
+      <h3>Programação</h3>
+      <p>Pratique lógica, algoritmos, estruturas de decisão e resolução de problemas.</p>
+      <span class="button disabled">Em preparação</span>
+    </article>
+
+    <article class="card">
+      <span class="icon">📂</span>
+      <span class="tag">Em breve</span>
+      <h3>Materiais para estudo</h3>
+      <p>Um espaço para apostilas, roteiros de aula, arquivos e materiais complementares.</p>
+      <span class="button disabled">Em preparação</span>
+    </article>
+
+  </section>
+
+  <section class="notice">
+    <strong>📌 Orientação:</strong>
+    leia os enunciados com atenção e realize as atividades de acordo
+    com as instruções do professor. Quando necessário, registre suas respostas
+    conforme a orientação recebida em aula.
+  </section>
+
+</main>
+
+<footer>
+  <p><strong>Portal de Atividades — Professor Victor</strong></p>
+  <p>Espaço educacional para aprender, praticar e evoluir.</p>
+</footer>
+
 </body>
 </html>
