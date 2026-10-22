@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desafio de Segurança da Informação</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  header {
+    background: #1c2c5b;
+    color: white;
+    padding: 28px 18px;
+    text-align: center;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: bold; }
+  label.option {
+    display: block;
+    border: 1px solid #d8deea;
+    padding: 12px;
+    border-radius: 9px;
+    margin: 9px 0;
+    cursor: pointer;
+  }
+  label.option:has(input:checked) {
+    border-color: #4267bb;
+    background: #edf2ff;
+  }
+  input { margin-right: 8px; }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .feedback { padding: 10px; border-radius: 8px; margin: 10px 0; }
+  .correct { background: #e2f6e9; }
+  .wrong { background: #fff0e8; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🔐 Desafio de Segurança da Informação</h1>
+  <p>Professor Victor de Andrade Machado</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Orientações</h2>
+    <p>Leia cada questão e escolha a alternativa que melhor responde à situação apresentada.</p>
+    <p>São cinco questões. Cada resposta correta vale 2 pontos.</p>
+  </section>
+
+  <form id="quiz" class="card">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Corrigir atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    q: "1. Um estudante recebe um e-mail que solicita sua senha por meio de um link desconhecido. Qual é a atitude mais segura?",
+    options: [
+      "Responder ao e-mail para confirmar a identidade do remetente.",
+      "Acessar o link e verificar se a página parece confiável.",
+      "Não fornecer a senha e verificar a mensagem por um canal oficial.",
+      "Encaminhar a mensagem aos colegas para que avaliem."
+    ],
+    answer: 2,
+    explanation: "Solicitações suspeitas devem ser verificadas por canais oficiais. O phishing tenta induzir a vítima a revelar informações."
+  },
+  {
+    q: "2. Uma empresa precisa garantir que somente pessoas autorizadas consultem dados confidenciais. Qual princípio está diretamente relacionado a esse objetivo?",
+    options: [
+      "Disponibilidade.",
+      "Confidencialidade.",
+      "Compatibilidade.",
+      "Portabilidade."
+    ],
+    answer: 1,
+    explanation: "A confidencialidade protege informações contra acesso por pessoas não autorizadas."
+  },
+  {
+    q: "3. Um arquivo importante foi alterado sem autorização. Qual propriedade da informação foi comprometida diretamente?",
+    options: [
+      "Integridade.",
+      "Disponibilidade.",
+      "Mobilidade.",
+      "Usabilidade."
+    ],
+    answer: 0,
+    explanation: "Integridade significa preservar a exatidão e a consistência das informações."
+  },
+  {
+    q: "4. Um funcionário precisa recuperar documentos após uma falha no computador. Qual medida ajuda diretamente nessa recuperação?",
+    options: [
+      "Utilizar a mesma senha em todos os sistemas.",
+      "Desativar as atualizações do sistema operacional.",
+      "Manter cópias de segurança testadas e atualizadas.",
+      "Compartilhar os documentos por qualquer serviço disponível."
+    ],
+    answer: 2,
+    explanation: "Backups permitem recuperar dados após falhas, exclusões acidentais ou incidentes."
+  },
+  {
+    q: "5. Vários computadores de uma organização ficam indisponíveis após receberem uma quantidade excessiva de requisições. Qual situação pode explicar o ocorrido?",
+    options: [
+      "Uma política de controle de acesso.",
+      "Uma rotina de cópia de segurança.",
+      "Uma atualização de antivírus.",
+      "Um ataque de negação de serviço."
+    ],
+    answer: 3,
+    explanation: "Um ataque DoS busca comprometer a disponibilidade de um serviço por meio da sobrecarga de recursos."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question";
+
+  const title = document.createElement("p");
+  title.textContent = item.q;
+  section.appendChild(title);
+
+  item.options.forEach((option, j) => {
+    const label = document.createElement("label");
+    label.className = "option";
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "q" + i;
+    input.value = j;
+    input.required = j === 0;
+
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(option));
+    section.appendChild(label);
+  });
+
+  container.appendChild(section);
+});
+
+document.getElementById("quiz").addEventListener("submit", event => {
+  event.preventDefault();
+
+  let score = 0;
+  let feedback = "";
+
+  questions.forEach((item, i) => {
+    const selected = document.querySelector(
+      'input[name="q' + i + '"]:checked'
+    );
+    const isCorrect = Number(selected.value) === item.answer;
+
+    if (isCorrect) score += 2;
+
+    feedback += '<div class="feedback ' +
+      (isCorrect ? "correct" : "wrong") + '">';
+    feedback += "<strong>Questão " + (i + 1) + ": " +
+      (isCorrect ? "Correta!" : "Incorreta") + "</strong><br>";
+    feedback += item.explanation + "</div>";
+  });
+
+  const result = document.getElementById("result");
+  result.innerHTML =
+    "<h2>Resultado: " + score + "/10 pontos</h2>" +
+    "<p>Você acertou " + (score / 2) + " de " +
+    questions.length + " questões.</p>" + feedback;
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("quiz").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.innerHTML = "";
+});
+</script>
+</body>
+</html>
