@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade 02 — Planejamento de TCC</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  header {
+    background: #1c2c5b;
+    color: white;
+    padding: 28px 18px;
+    text-align: center;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: bold; }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1px solid #d8deea;
+    border-radius: 9px;
+    font: inherit;
+    resize: vertical;
+  }
+  textarea:focus {
+    outline: 2px solid #4267bb;
+    outline-offset: 2px;
+  }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .response {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: #edf2ff;
+  }
+  .response-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📋 Atividade 02 — Planejamento de recursos e tecnologias</h1>
+  <p>Antecipem recursos, ferramentas, referências, responsabilidades e prazos</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Orientações</h2>
+    <p>Respondam em grupo com base no que pretendem fazer. Indiquem escolhas planejadas e alternativas em avaliação, sem apresentar como concluído algo que ainda não foi executado.</p>
+    <p>São 10 questões discursivas. As respostas ficam disponíveis nesta página para discussão e avaliação do professor.</p>
+  </section>
+
+  <form id="activity" class="card">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Finalizar atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    q: "1. Quais recursos humanos serão necessários? Planejem os papéis e as responsabilidades de cada integrante do grupo.",
+    placeholder: "Integrante, papel planejado e responsabilidade..."
+  },
+  {
+    q: "2. Quais equipamentos, materiais ou espaços o grupo prevê que serão necessários? Indiquem o que já está disponível e o que precisará ser providenciado.",
+    placeholder: "Recursos físicos previstos e disponibilidade..."
+  },
+  {
+    q: "3. Quais tecnologias, ferramentas ou plataformas o grupo planeja usar e para que servirá cada uma?",
+    placeholder: "Tecnologia/ferramenta planejada e finalidade..."
+  },
+  {
+    q: "4. Se o TCC envolver software, quais linguagens de programação, frameworks ou ambientes de desenvolvimento estão sendo considerados? Justifiquem a escolha planejada.",
+    placeholder: "Linguagens e ferramentas consideradas, com justificativa..."
+  },
+  {
+    q: "5. Que conhecimentos ou capacitações o grupo precisará adquirir antes de usar as tecnologias escolhidas? Como planeja obtê-los?",
+    placeholder: "Conhecimentos necessários e como planejam aprendê-los..."
+  },
+  {
+    q: "6. Que custos, licenças, contas ou serviços poderão ser necessários? Planejem como verificar a disponibilidade e alternativas gratuitas ou acessíveis.",
+    placeholder: "Custos previstos, como serão verificados e alternativas..."
+  },
+  {
+    q: "7. Quais são as principais referências que o grupo planeja consultar? Registrem autor ou instituição, título ou tema e a contribuição esperada de cada fonte.",
+    placeholder: "Fontes planejadas e contribuição esperada..."
+  },
+  {
+    q: "8. Quais serão as principais etapas do projeto e quanto tempo o grupo prevê para cada uma? Incluam datas ou períodos estimados.",
+    placeholder: "Etapa, período previsto e responsável..."
+  },
+  {
+    q: "9. Que riscos ou impedimentos podem afetar o plano (por exemplo, falta de equipamento, tempo ou conhecimento)? Que alternativas o grupo prevê?",
+    placeholder: "Risco previsto e alternativa planejada..."
+  },
+  {
+    q: "10. Como o grupo pretende acompanhar o cronograma e revisar suas escolhas de recursos e tecnologias se o plano precisar mudar?",
+    placeholder: "Frequência de acompanhamento e como as mudanças serão decididas..."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question";
+
+  const title = document.createElement("p");
+  title.textContent = item.q;
+  section.appendChild(title);
+
+  const label = document.createElement("label");
+  label.htmlFor = "q" + i;
+  label.textContent = "Plano do grupo";
+
+  const textarea = document.createElement("textarea");
+  textarea.id = "q" + i;
+  textarea.name = "q" + i;
+  textarea.placeholder = item.placeholder;
+  textarea.required = true;
+  textarea.maxLength = 2000;
+
+  section.appendChild(label);
+  section.appendChild(textarea);
+  container.appendChild(section);
+});
+
+document.getElementById("activity").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Plano do grupo registrado";
+  result.appendChild(heading);
+
+  const description = document.createElement("p");
+  description.textContent = "Revisem se os recursos, as tecnologias e os prazos são compatíveis com o escopo planejado.";
+  result.appendChild(description);
+
+  questions.forEach((item, i) => {
+    const response = document.createElement("div");
+    response.className = "response";
+
+    const title = document.createElement("strong");
+    title.textContent = "Questão " + (i + 1);
+
+    const text = document.createElement("p");
+    text.className = "response-text";
+    text.textContent = document.getElementById("q" + i).value.trim();
+
+    response.appendChild(title);
+    response.appendChild(text);
+    result.appendChild(response);
+  });
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("activity").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.replaceChildren();
+});
+</script>
+</body>
+</html>

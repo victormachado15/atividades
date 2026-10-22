@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade 01 — Planejamento de TCC</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  header {
+    background: #1c2c5b;
+    color: white;
+    padding: 28px 18px;
+    text-align: center;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: bold; }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1px solid #d8deea;
+    border-radius: 9px;
+    font: inherit;
+    resize: vertical;
+  }
+  textarea:focus {
+    outline: 2px solid #4267bb;
+    outline-offset: 2px;
+  }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .response {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: #edf2ff;
+  }
+  .response-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📋 Atividade 01 — Delimitação e escopo do projeto</h1>
+  <p>Planejem o que pretendem pesquisar ou desenvolver antes de iniciar a execução</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Orientações</h2>
+    <p>Respondam em grupo. Nesta etapa, registrem propostas e decisões planejadas; não é necessário que o projeto já esteja executado.</p>
+    <p>São 10 questões discursivas. As respostas ficam disponíveis nesta página para discussão e avaliação do professor.</p>
+  </section>
+
+  <form id="activity" class="card">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Finalizar atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    q: "1. Qual tema ou área de interesse o grupo pretende estudar? Registrem uma proposta inicial e expliquem por que ela foi escolhida.",
+    placeholder: "Tema planejado e justificativa..."
+  },
+  {
+    q: "2. Que situação, necessidade ou problema o projeto pretende abordar? Escrevam uma pergunta que ajude a orientar o trabalho.",
+    placeholder: "Problema ou pergunta de pesquisa planejada..."
+  },
+  {
+    q: "3. Qual será o objetivo geral do TCC? Descrevam o que o grupo pretende alcançar.",
+    placeholder: "Objetivo geral planejado..."
+  },
+  {
+    q: "4. Quais objetivos específicos ou etapas principais poderão ajudar a alcançar o objetivo geral?",
+    placeholder: "Etapas e objetivos específicos planejados..."
+  },
+  {
+    q: "5. Quem será o público ou usuário que o projeto pretende atender? Que necessidade desse público vocês planejam considerar?",
+    placeholder: "Público previsto e necessidade que será considerada..."
+  },
+  {
+    q: "6. O que o grupo pretende entregar ao final do TCC (por exemplo, pesquisa, protótipo, aplicativo, sistema, guia ou proposta)?",
+    placeholder: "Produto, resultado ou entrega pretendida..."
+  },
+  {
+    q: "7. O que fará parte do escopo planejado e o que ficará fora dele? Indiquem limites para manter o projeto viável.",
+    placeholder: "Incluído no escopo / fora do escopo..."
+  },
+  {
+    q: "8. Quais referências iniciais o grupo planeja consultar para entender o tema? Registrem autores, instituições, títulos ou fontes a pesquisar.",
+    placeholder: "Referências ou fontes que pretendem consultar..."
+  },
+  {
+    q: "9. Quais critérios poderão ser usados para avaliar se o resultado final atenderá ao objetivo e às necessidades previstas?",
+    placeholder: "Critérios de avaliação planejados..."
+  },
+  {
+    q: "10. Quais decisões ainda precisam ser pesquisadas, discutidas com o orientador ou validadas antes de iniciar a execução?",
+    placeholder: "Dúvidas e decisões pendentes..."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question";
+
+  const title = document.createElement("p");
+  title.textContent = item.q;
+  section.appendChild(title);
+
+  const label = document.createElement("label");
+  label.htmlFor = "q" + i;
+  label.textContent = "Resposta planejada pelo grupo";
+
+  const textarea = document.createElement("textarea");
+  textarea.id = "q" + i;
+  textarea.name = "q" + i;
+  textarea.placeholder = item.placeholder;
+  textarea.required = true;
+  textarea.maxLength = 2000;
+
+  section.appendChild(label);
+  section.appendChild(textarea);
+  container.appendChild(section);
+});
+
+document.getElementById("activity").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Planejamento registrado";
+  result.appendChild(heading);
+
+  const description = document.createElement("p");
+  description.textContent = "Revisem as respostas em grupo e validem as decisões com o professor ou orientador.";
+  result.appendChild(description);
+
+  questions.forEach((item, i) => {
+    const response = document.createElement("div");
+    response.className = "response";
+
+    const title = document.createElement("strong");
+    title.textContent = "Questão " + (i + 1);
+
+    const text = document.createElement("p");
+    text.className = "response-text";
+    text.textContent = document.getElementById("q" + i).value.trim();
+
+    response.appendChild(title);
+    response.appendChild(text);
+    result.appendChild(response);
+  });
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("activity").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.replaceChildren();
+});
+</script>
+</body>
+</html>

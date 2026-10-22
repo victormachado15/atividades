@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade 02 — Desenvolvimento de TCC</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  header {
+    background: #1c2c5b;
+    color: white;
+    padding: 28px 18px;
+    text-align: center;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: bold; }
+  label.option {
+    display: block;
+    border: 1px solid #d8deea;
+    padding: 12px;
+    border-radius: 9px;
+    margin: 9px 0;
+    cursor: pointer;
+  }
+  label.option:has(input:checked) {
+    border-color: #4267bb;
+    background: #edf2ff;
+  }
+  input { margin-right: 8px; }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 110px;
+    padding: 12px;
+    border: 1px solid #d8deea;
+    border-radius: 9px;
+    font: inherit;
+    resize: vertical;
+  }
+  textarea:focus {
+    outline: 2px solid #4267bb;
+    outline-offset: 2px;
+  }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .feedback { padding: 10px; border-radius: 8px; margin: 10px 0; }
+  .correct { background: #e2f6e9; }
+  .wrong { background: #fff0e8; }
+  .response { background: #edf2ff; }
+  .response-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📝 Atividade 02 — Desenvolvimento de TCC</h1>
+  <p>Planejamento, tecnologias, referências e organização do trabalho em grupo</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Orientações</h2>
+    <p>Respondam em grupo às questões discursivas, registrando as decisões e justificativas de vocês. Nas questões objetivas, escolham uma alternativa.</p>
+    <p>São 10 questões: 7 respostas discursivas para discussão e avaliação do professor e 3 questões objetivas com correção automática.</p>
+  </section>
+
+  <form id="activity" class="card">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Finalizar atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    type: "text",
+    q: "1. Em que fase do desenvolvimento do TCC o grupo está? Descrevam o que já foi concluído e qual é a próxima etapa.",
+    placeholder: "Ex.: estamos delimitando o tema; já definimos..."
+  },
+  {
+    type: "text",
+    q: "2. Qual é o tema, o problema de pesquisa e o objetivo geral do trabalho? Expliquem como esses três elementos se relacionam.",
+    placeholder: "Registrem a proposta atual do grupo..."
+  },
+  {
+    type: "text",
+    q: "3. Quais tecnologias, ferramentas ou recursos o grupo pretende utilizar (por exemplo, linguagens, aplicativos, equipamentos ou plataformas)? Justifiquem a escolha de cada um.",
+    placeholder: "Listem as tecnologias e expliquem por que são adequadas..."
+  },
+  {
+    type: "text",
+    q: "4. Há dependências, custos, conhecimentos técnicos ou riscos relacionados às tecnologias escolhidas? Como o grupo pretende lidar com eles?",
+    placeholder: "Descrevam os desafios previstos e possíveis soluções..."
+  },
+  {
+    type: "text",
+    q: "5. Quais são as principais referências que vocês já consultaram ou pretendem consultar? Informem autor ou instituição, título e como cada fonte contribui para o TCC.",
+    placeholder: "Registrem as fontes e sua contribuição para a pesquisa..."
+  },
+  {
+    type: "text",
+    q: "6. Como o grupo vai dividir as tarefas e acompanhar o cronograma? Citem responsabilidades, próximos prazos e como as decisões serão registradas.",
+    placeholder: "Descrevam a divisão de responsabilidades e o acompanhamento..."
+  },
+  {
+    type: "text",
+    q: "7. Que resultado ou produto o grupo espera obter e como pretende verificar se ele atende ao objetivo do TCC?",
+    placeholder: "Descrevam o resultado esperado e os critérios de avaliação..."
+  },
+  {
+    type: "choice",
+    q: "8. Se o grupo ainda está escolhendo a tecnologia do projeto, qual critério deve orientar a decisão?",
+    options: [
+      "Escolher a ferramenta mais popular, independentemente do problema.",
+      "Escolher uma tecnologia que o grupo consiga avaliar e que seja adequada aos objetivos, recursos e prazo.",
+      "Usar o maior número possível de tecnologias.",
+      "Decidir apenas pela preferência de uma pessoa do grupo."
+    ],
+    answer: 1,
+    explanation: "A tecnologia deve ser justificada pela adequação ao problema, aos objetivos, aos recursos disponíveis e ao prazo."
+  },
+  {
+    type: "choice",
+    q: "9. Qual prática ajuda a manter as referências do TCC confiáveis e rastreáveis?",
+    options: [
+      "Guardar os links sem anotar autores ou títulos.",
+      "Usar somente resultados de busca sem consultar as fontes.",
+      "Registrar os dados bibliográficos e conferir a credibilidade e a pertinência de cada fonte.",
+      "Incluir toda página encontrada, mesmo sem relação com o tema."
+    ],
+    answer: 2,
+    explanation: "Registrar os dados da fonte e avaliar sua credibilidade e pertinência facilita a citação correta e sustenta a pesquisa."
+  },
+  {
+    type: "choice",
+    q: "10. Durante a execução do projeto, o grupo percebe que uma etapa atrasou. Qual é a melhor atitude?",
+    options: [
+      "Ignorar o atraso e manter o cronograma sem conversar com o grupo.",
+      "Revisar as tarefas e dependências, combinar ajustes e atualizar o cronograma com o orientador quando necessário.",
+      "Excluir o objetivo principal sem avaliar o impacto.",
+      "Deixar todas as tarefas para a pessoa que estiver mais disponível."
+    ],
+    answer: 1,
+    explanation: "A equipe deve avaliar o impacto do atraso, redistribuir tarefas de forma acordada e atualizar o planejamento."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question";
+
+  const title = document.createElement("p");
+  title.textContent = item.q;
+  section.appendChild(title);
+
+  if (item.type === "text") {
+    const label = document.createElement("label");
+    label.htmlFor = "q" + i;
+    label.textContent = "Resposta do grupo";
+
+    const textarea = document.createElement("textarea");
+    textarea.id = "q" + i;
+    textarea.name = "q" + i;
+    textarea.placeholder = item.placeholder;
+    textarea.required = true;
+    textarea.maxLength = 2000;
+
+    section.appendChild(label);
+    section.appendChild(textarea);
+  } else {
+    item.options.forEach((option, j) => {
+      const label = document.createElement("label");
+      label.className = "option";
+
+      const input = document.createElement("input");
+      input.type = "radio";
+      input.name = "q" + i;
+      input.value = j;
+      input.required = j === 0;
+
+      label.appendChild(input);
+      label.appendChild(document.createTextNode(option));
+      section.appendChild(label);
+    });
+  }
+
+  container.appendChild(section);
+});
+
+document.getElementById("activity").addEventListener("submit", event => {
+  event.preventDefault();
+
+  let score = 0;
+  let objectiveCount = 0;
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  const heading = document.createElement("h2");
+  const objectiveResult = document.createElement("p");
+  const writtenHeading = document.createElement("h3");
+  heading.textContent = "Atividade concluída";
+  writtenHeading.textContent = "Respostas para discussão e avaliação do professor";
+  result.appendChild(heading);
+  result.appendChild(objectiveResult);
+  result.appendChild(writtenHeading);
+
+  questions.forEach((item, i) => {
+    const feedback = document.createElement("div");
+    feedback.className = "feedback";
+
+    const title = document.createElement("strong");
+    title.textContent = "Questão " + (i + 1) + ": ";
+    feedback.appendChild(title);
+
+    if (item.type === "text") {
+      const response = document.createElement("p");
+      response.className = "response-text";
+      response.textContent = document.getElementById("q" + i).value.trim();
+      feedback.classList.add("response");
+      feedback.appendChild(document.createTextNode("Resposta registrada."));
+      feedback.appendChild(response);
+    } else {
+      objectiveCount++;
+      const selected = document.querySelector('input[name="q' + i + '"]:checked');
+      const isCorrect = Number(selected.value) === item.answer;
+      if (isCorrect) score++;
+      feedback.classList.add(isCorrect ? "correct" : "wrong");
+      feedback.appendChild(document.createTextNode(isCorrect ? "Correta! " : "Incorreta. "));
+      feedback.appendChild(document.createTextNode(item.explanation));
+    }
+
+    result.appendChild(feedback);
+  });
+
+  objectiveResult.textContent =
+    "Questões objetivas: " + score + "/" + objectiveCount +
+    ". As respostas discursivas foram registradas para avaliação do professor.";
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("activity").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.replaceChildren();
+});
+</script>
+</body>
+</html>

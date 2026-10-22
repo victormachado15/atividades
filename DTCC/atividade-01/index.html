@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desafio de Desenvolvimento de TCC</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  header {
+    background: #1c2c5b;
+    color: white;
+    padding: 28px 18px;
+    text-align: center;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: bold; }
+  label.option {
+    display: block;
+    border: 1px solid #d8deea;
+    padding: 12px;
+    border-radius: 9px;
+    margin: 9px 0;
+    cursor: pointer;
+  }
+  label.option:has(input:checked) {
+    border-color: #4267bb;
+    background: #edf2ff;
+  }
+  input { margin-right: 8px; }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .feedback { padding: 10px; border-radius: 8px; margin: 10px 0; }
+  .correct { background: #e2f6e9; }
+  .wrong { background: #fff0e8; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<header>
+  <h1>📝 Desafio de Desenvolvimento de TCC</h1>
+  <p>Professor Victor de Andrade Machado</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Orientações</h2>
+    <p>Leia cada questão e escolha a alternativa que melhor responde à situação apresentada.</p>
+    <p>São cinco questões. Cada resposta correta vale 2 pontos.</p>
+  </section>
+
+  <form id="quiz" class="card">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Corrigir atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    q: "1. Ao iniciar um TCC, qual é uma boa forma de escolher o tema?",
+    options: [
+      "Escolher um assunto amplo sem considerar o tempo disponível.",
+      "Definir um assunto de interesse que possa ser delimitado e pesquisado.",
+      "Copiar o tema de um trabalho pronto.",
+      "Escolher um tema sem verificar se existem fontes confiáveis."
+    ],
+    answer: 1,
+    explanation: "Um tema viável deve ser de interesse do estudante, ter fontes disponíveis e caber no prazo e no escopo do trabalho."
+  },
+  {
+    q: "2. O que caracteriza um problema de pesquisa adequado?",
+    options: [
+      "Uma pergunta clara, delimitada e que possa ser investigada.",
+      "Uma afirmação ampla que não precisa ser respondida.",
+      "Uma lista de tarefas para concluir o trabalho.",
+      "O título escolhido para a capa."
+    ],
+    answer: 0,
+    explanation: "O problema de pesquisa orienta o estudo e deve ser formulado como uma questão clara e viável de investigar."
+  },
+  {
+    q: "3. Como deve ser formulado o objetivo geral de um TCC?",
+    options: [
+      "Como uma lista de opiniões pessoais sobre o tema.",
+      "Como uma pergunta sem relação com o problema de pesquisa.",
+      "Como uma descrição de todos os capítulos já escritos.",
+      "Como a finalidade principal do estudo, usando um verbo no infinitivo."
+    ],
+    answer: 3,
+    explanation: "O objetivo geral expressa o resultado que a pesquisa pretende alcançar e deve estar alinhado ao problema de pesquisa."
+  },
+  {
+    q: "4. O que deve ser apresentado na metodologia?",
+    options: [
+      "Somente a conclusão que se espera obter.",
+      "Os procedimentos, métodos e etapas usados para realizar a pesquisa.",
+      "Apenas os agradecimentos do autor.",
+      "Uma cópia integral dos resultados de outros trabalhos."
+    ],
+    answer: 1,
+    explanation: "A metodologia explica como a pesquisa será realizada, incluindo seus procedimentos e formas de coleta e análise de dados."
+  },
+  {
+    q: "5. Como utilizar corretamente uma ideia encontrada em uma fonte consultada?",
+    options: [
+      "Reescrevê-la sem indicar de onde veio.",
+      "Copiá-la diretamente e apresentar como resultado próprio.",
+      "Citar a fonte no texto e incluí-la nas referências conforme as normas adotadas.",
+      "Usá-la somente na conclusão, sem mencionar a fonte."
+    ],
+    answer: 2,
+    explanation: "Citar as fontes reconhece a autoria das ideias e permite que o leitor localize as obras consultadas."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question";
+
+  const title = document.createElement("p");
+  title.textContent = item.q;
+  section.appendChild(title);
+
+  item.options.forEach((option, j) => {
+    const label = document.createElement("label");
+    label.className = "option";
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "q" + i;
+    input.value = j;
+    input.required = j === 0;
+
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(option));
+    section.appendChild(label);
+  });
+
+  container.appendChild(section);
+});
+
+document.getElementById("quiz").addEventListener("submit", event => {
+  event.preventDefault();
+
+  let score = 0;
+  let feedback = "";
+
+  questions.forEach((item, i) => {
+    const selected = document.querySelector(
+      'input[name="q' + i + '"]:checked'
+    );
+    const isCorrect = Number(selected.value) === item.answer;
+
+    if (isCorrect) score += 2;
+
+    feedback += '<div class="feedback ' +
+      (isCorrect ? "correct" : "wrong") + '">';
+    feedback += "<strong>Questão " + (i + 1) + ": " +
+      (isCorrect ? "Correta!" : "Incorreta") + "</strong><br>";
+    feedback += item.explanation + "</div>";
+  });
+
+  const result = document.getElementById("result");
+  result.innerHTML =
+    "<h2>Resultado: " + score + "/10 pontos</h2>" +
+    "<p>Você acertou " + (score / 2) + " de " +
+    questions.length + " questões.</p>" + feedback;
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("quiz").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.innerHTML = "";
+});
+</script>
+</body>
+</html>
