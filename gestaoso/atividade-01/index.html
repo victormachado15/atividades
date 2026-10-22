@@ -6,6 +6,7 @@
     <title>Atividade Prática: Gerenciamento do Windows pelo CMD - ETEC Hortolândia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -79,77 +80,30 @@
 </head>
 <body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col antialiased font-sans">
 
-    <!-- Top Floating Header -->
-    <header class="bg-slate-900 text-white sticky top-0 z-50 shadow-md no-print">
-        <div class="max-w-5xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-3">
-            <div class="flex items-center gap-3">
-                <div class="bg-winblue-500 text-white p-2 rounded-lg font-bold text-xl flex items-center justify-center w-10 h-10">
-                    <i class="fa-solid fa-terminal"></i>
-                </div>
-                <div>
-                    <h1 class="text-base font-semibold leading-tight">Atividade Prática: Gerenciamento pelo CMD</h1>
-                    <p class="text-xs text-slate-300">GSO I • ETEC Hortolândia (1º DSA)</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <button onclick="clearForm()" class="px-3 py-2 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors flex items-center gap-1.5">
-                    <i class="fa-solid fa-rotate-left"></i> Limpar
-                </button>
-                <button onclick="window.print()" class="px-4 py-2 text-xs font-semibold bg-winblue-500 hover:bg-winblue-600 text-white rounded-lg transition-colors shadow-sm flex items-center gap-1.5">
-                    <i class="fa-solid fa-file-pdf"></i> Gerar PDF / Imprimir
-                </button>
-            </div>
-        </div>
-    </header>
-
     <main class="max-w-5xl mx-auto w-full px-4 py-6 flex-grow">
 
-        <!-- Identification Block -->
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6 print-card">
-            <div class="border-b border-slate-200 pb-4 mb-4 flex flex-wrap justify-between items-start gap-4">
-                <div>
-                    <span class="inline-block text-xs font-bold tracking-wider text-winblue-600 bg-winblue-50 px-2.5 py-1 rounded-md mb-2">ETEC HORTOLÂNDIA • 1º DSA</span>
-                    <h2 class="text-2xl font-bold text-slate-900">Atividade Prática — Gerenciamento do Windows pelo CMD</h2>
-                    <p class="text-xs font-semibold text-slate-600 mt-1">Disciplina: Gestão de Sistemas Operacionais I (GSO I)</p>
-                    <p class="text-xs text-slate-500">Tema: Ferramentas de gestão e diagnóstico do sistema operacional (Acesso Usuário Padrão)</p>
-                </div>
-                <div class="text-right text-xs text-slate-500 hidden sm:block">
-                    <p><i class="fa-regular fa-calendar-check mr-1"></i> Ano Letivo 2026</p>
-                    <p class="mt-1"><i class="fa-solid fa-user-shield text-emerald-600"></i> Sem Privilégios de Admin</p>
-                </div>
-            </div>
+        <section data-activity-identification
+            data-course="Gestão de Sistemas Operacionais I (GSO I)"
+            data-topic="Ferramentas de gestão e diagnóstico do sistema operacional (Acesso Usuário Padrão)"
+            data-activity-title="Atividade Prática — Gerenciamento do Windows pelo CMD"
+            data-header-title="Atividade Prática: Gerenciamento pelo CMD"
+            data-header-subtitle="GSO I • ETEC Hortolândia (1º DSA)"
+            data-header-icon="›_"
+            data-school="ETEC HORTOLÂNDIA • 1º DSA"
+            data-default-class="1º DSA - ETEC Hortolândia"></section>
 
-            <!-- Guidelines Callout -->
-            <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg text-xs text-amber-900 mb-5 leading-relaxed">
-                <p class="font-bold mb-1"><i class="fa-solid fa-circle-info mr-1"></i> Orientações:</p>
-                <ol class="list-decimal list-inside space-y-0.5">
+        <div class="activity-guidelines print-card">
+                <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+                <ol>
                     <li>Abra o <strong>Prompt de Comando (CMD)</strong> sem elevação de administrador.</li>
                     <li>Execute os comandos indicados e responda com base nas informações do seu próprio computador.</li>
                     <li>Caso algum comando seja bloqueado pela política do laboratório, registre o ocorrido e prossiga.</li>
                     <li><strong>Atenção:</strong> Não encerre processos, altere serviços nem exclua arquivos durante a atividade.</li>
                 </ol>
-            </div>
-
-            <!-- Student Form Inputs -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Nome Completo do Aluno(a):</label>
-                    <input type="text" id="student_name" placeholder="Digite seu nome completo" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-slate-50 focus:bg-white transition-colors">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Turma / Período:</label>
-                    <input type="text" id="student_class" value="1º DSA - ETEC Hortolândia" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-slate-50 focus:bg-white transition-colors">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-slate-700 mb-1">Data de Realização:</label>
-                    <input type="date" id="activity_date" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-slate-50 focus:bg-white transition-colors">
-                </div>
-            </div>
         </div>
 
         <!-- Form for Activity Questions -->
-        <form id="activityForm" onsubmit="event.preventDefault();">
+        <form id="activityForm" data-pdf-title="Atividade Prática — Gerenciamento do Windows pelo CMD" data-pdf-question-selector=".print-card" onsubmit="event.preventDefault();">
 
             <!-- Questão 1 -->
             <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-6 print-card">
@@ -542,7 +496,12 @@ tasklist
     <script>
         // Set today's date into the input field by default
         document.addEventListener("DOMContentLoaded", function() {
-            const today = new Date().toISOString().split('T')[0];
+            const currentDate = new Date();
+            const today = [
+                currentDate.getFullYear(),
+                String(currentDate.getMonth() + 1).padStart(2, '0'),
+                String(currentDate.getDate()).padStart(2, '0')
+            ].join('-');
             const dateInput = document.getElementById('activity_date');
             if (dateInput) {
                 dateInput.value = today;
@@ -563,19 +522,8 @@ tasklist
         }
 
         // Clear all input fields
-        function clearForm() {
-            if (confirm("Deseja realmente limpar todas as respostas digitadas?")) {
-                const form = document.getElementById('activityForm');
-                form.reset();
-                document.getElementById('student_name').value = '';
-
-                // Reset height of textareas
-                const textareas = document.querySelectorAll('textarea.auto-expand');
-                textareas.forEach(textarea => {
-                    textarea.style.height = '70px';
-                });
-            }
-        }
     </script>
+    <script src="../../scripts/atividade-identificacao.js"></script>
+    <script src="../../scripts/atividade-pdf.js"></script>
 </body>
 </html>

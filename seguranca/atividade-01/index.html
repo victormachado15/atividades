@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Desafio de Segurança da Informação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
 <style>
   * { box-sizing: border-box; }
   body {
@@ -63,19 +67,26 @@
 </style>
 </head>
 <body>
-<header>
-  <h1>🔐 Desafio de Segurança da Informação</h1>
-  <p>Professor Victor de Andrade Machado</p>
-</header>
-
 <main>
-  <section class="card">
-    <h2>Orientações</h2>
-    <p>Leia cada questão e escolha a alternativa que melhor responde à situação apresentada.</p>
-    <p>São cinco questões. Cada resposta correta vale 2 pontos.</p>
+  <section data-activity-identification
+    data-course="Segurança da Informação"
+    data-topic="Fundamentos de Segurança da Informação"
+    data-activity-title="Atividade 01 — Fundamentos de Segurança"
+    data-header-title="Atividade Prática: Fundamentos de Segurança"
+    data-header-subtitle="Segurança da Informação • ETEC Hortolândia (1º DSA)"
+    data-header-icon="🔐"
+    data-school="ETEC HORTOLÂNDIA • 1º DSA"
+    data-default-class="1º DSA - ETEC Hortolândia"></section>
+
+  <section class="card activity-guidelines">
+    <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+    <ol>
+      <li>Leia cada questão e escolha a alternativa que melhor responde à situação apresentada.</li>
+      <li>Responda às cinco questões. Cada resposta correta vale 2 pontos.</li>
+    </ol>
   </section>
 
-  <form id="quiz" class="card">
+  <form id="quiz" class="card" data-pdf-title="Desafio de Segurança da Informação">
     <div id="questions"></div>
     <button class="primary" type="submit">Corrigir atividade</button>
     <button class="secondary" type="reset">Limpar respostas</button>
@@ -149,15 +160,25 @@ const container = document.getElementById("questions");
 
 questions.forEach((item, i) => {
   const section = document.createElement("section");
-  section.className = "question";
+  section.className = "question activity-question";
+  section.dataset.pdfQuestion = "";
+
+  const heading = document.createElement("div");
+  heading.className = "activity-question-heading";
+  const number = document.createElement("span");
+  number.className = "activity-question-number";
+  number.textContent = "Questão " + (i + 1);
 
   const title = document.createElement("p");
-  title.textContent = item.q;
-  section.appendChild(title);
+  title.className = "activity-question-title";
+  title.textContent = item.q.replace(/^\d+\.\s*/, "");
+  heading.appendChild(number);
+  heading.appendChild(title);
+  section.appendChild(heading);
 
   item.options.forEach((option, j) => {
     const label = document.createElement("label");
-    label.className = "option";
+    label.className = "option activity-question-option";
 
     const input = document.createElement("input");
     input.type = "radio";
@@ -210,5 +231,7 @@ document.getElementById("quiz").addEventListener("reset", () => {
   result.innerHTML = "";
 });
 </script>
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
 </body>
 </html>

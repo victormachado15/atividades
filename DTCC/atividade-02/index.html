@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atividade 02 — Desenvolvimento de TCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
 <style>
   * { box-sizing: border-box; }
   body {
@@ -79,19 +83,26 @@
 </style>
 </head>
 <body>
-<header>
-  <h1>📝 Atividade 02 — Desenvolvimento de TCC</h1>
-  <p>Planejamento, tecnologias, referências e organização do trabalho em grupo</p>
-</header>
-
 <main>
-  <section class="card">
-    <h2>Orientações</h2>
-    <p>Respondam em grupo às questões discursivas, registrando as decisões e justificativas de vocês. Nas questões objetivas, escolham uma alternativa.</p>
-    <p>São 10 questões: 7 respostas discursivas para discussão e avaliação do professor e 3 questões objetivas com correção automática.</p>
+  <section data-activity-identification
+    data-course="Desenvolvimento de TCC (DTCC)"
+    data-topic="Fases, tecnologias, referências e organização do TCC"
+    data-activity-title="Atividade 02 — Planejamento e desenvolvimento do TCC"
+    data-header-title="Atividade Prática: Desenvolvimento de TCC"
+    data-header-subtitle="DTCC • ETEC Hortolândia (3º DSA)"
+    data-header-icon="📝"
+    data-school="ETEC HORTOLÂNDIA • 3º DSA"
+    data-default-class="3º DSA - ETEC Hortolândia"></section>
+
+  <section class="card activity-guidelines">
+    <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+    <ol>
+      <li>Respondam em grupo às questões discursivas, registrando as decisões e justificativas. Nas objetivas, escolham uma alternativa.</li>
+      <li>São 10 questões: 7 discursivas para avaliação do professor e 3 objetivas com correção automática.</li>
+    </ol>
   </section>
 
-  <form id="activity" class="card">
+  <form id="activity" class="card" data-pdf-title="Atividade 02 — Desenvolvimento de TCC">
     <div id="questions"></div>
     <button class="primary" type="submit">Finalizar atividade</button>
     <button class="secondary" type="reset">Limpar respostas</button>
@@ -181,11 +192,21 @@ const container = document.getElementById("questions");
 
 questions.forEach((item, i) => {
   const section = document.createElement("section");
-  section.className = "question";
+  section.className = "question activity-question";
+  section.dataset.pdfQuestion = "";
+
+  const heading = document.createElement("div");
+  heading.className = "activity-question-heading";
+  const number = document.createElement("span");
+  number.className = "activity-question-number";
+  number.textContent = "Questão " + (i + 1);
 
   const title = document.createElement("p");
-  title.textContent = item.q;
-  section.appendChild(title);
+  title.className = "activity-question-title";
+  title.textContent = item.q.replace(/^\d+\.\s*/, "");
+  heading.appendChild(number);
+  heading.appendChild(title);
+  section.appendChild(heading);
 
   if (item.type === "text") {
     const label = document.createElement("label");
@@ -193,6 +214,7 @@ questions.forEach((item, i) => {
     label.textContent = "Resposta do grupo";
 
     const textarea = document.createElement("textarea");
+    textarea.className = "auto-expand";
     textarea.id = "q" + i;
     textarea.name = "q" + i;
     textarea.placeholder = item.placeholder;
@@ -204,7 +226,7 @@ questions.forEach((item, i) => {
   } else {
     item.options.forEach((option, j) => {
       const label = document.createElement("label");
-      label.className = "option";
+      label.className = "option activity-question-option";
 
       const input = document.createElement("input");
       input.type = "radio";
@@ -279,5 +301,7 @@ document.getElementById("activity").addEventListener("reset", () => {
   result.replaceChildren();
 });
 </script>
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
 </body>
 </html>
