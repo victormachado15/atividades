@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade Avaliativa: GSO I — Inicialização do Windows e Diagnóstico de Falhas de Boot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #f1f5f9;
+            color: #334155;
+            font-family: Inter, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            margin: 0 auto;
+            max-width: 1024px;
+            padding: 24px;
+        }
+
+        .question-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #15264a0a;
+            margin: 0 0 18px;
+            padding: 18px;
+        }
+
+        .activity-question-heading {
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .finalization-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px #15264a0a;
+            margin: 24px 0 18px;
+            padding: 18px;
+        }
+
+        .finalization-heading {
+            align-items: center;
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .finalization-label {
+            background: #059669;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 10px;
+        }
+
+        .finalization-heading h2 {
+            color: #1e293b;
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        .finalization-card p {
+            color: #475569;
+            margin: 0 0 16px;
+        }
+
+        .options-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .options-list li {
+            margin: 7px 0;
+        }
+
+        .options-list label {
+            align-items: flex-start;
+            background: #fff;
+            border: 1px solid #d8deea;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            gap: 8px;
+            line-height: 1.5;
+            padding: 10px 12px;
+            transition: background-color 0.15s ease, border-color 0.15s ease;
+        }
+
+        .options-list label:hover,
+        .options-list label:has(input:checked) {
+            background: #edf2ff;
+            border-color: #4267bb;
+        }
+
+        .options-list input[type="radio"] {
+            accent-color: #0078d7;
+            flex: 0 0 auto;
+            margin: 4px 0 0;
+        }
+
+        .actions {
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .btn {
+            background: #0078d7;
+            border: none;
+            border-radius: 9px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 12px 20px;
+        }
+
+        .btn:hover,
+        .btn:focus {
+            background: #005a9e;
+        }
+
+        .feedback {
+            display: none;
+            font-weight: 500;
+            margin: 20px 0;
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .explanation {
+            background: #f8fafc;
+            border-left: 3px solid #0078d7;
+            border-radius: 6px;
+            color: #475569;
+            display: none;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .correct-option {
+            background: #dcfce7 !important;
+            border-color: #86efac !important;
+            color: #166534 !important;
+        }
+
+        .incorrect-option {
+            background: #fee2e2 !important;
+            border-color: #fca5a5 !important;
+            color: #991b1b !important;
+        }
+
+        .page-footer {
+            background: #0f172a;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        .page-footer p {
+            margin: 0;
+        }
+
+        .page-footer p + p {
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .container {
+                padding: 16px;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .container {
+                max-width: none;
+                padding: 0;
+            }
+
+            .actions {
+                display: none;
+            }
+
+            .finalization-card {
+                box-shadow: none;
+            }
+
+            .page-footer {
+                display: none;
+            }
+
+            .question-card {
+                break-inside: avoid;
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<main class="container">
+    <section data-activity-identification
+        data-course="Gestão de Sistemas Operacionais I (GSO I)"
+        data-topic="Inicialização do Windows e diagnóstico de falhas de boot"
+        data-activity-title="Atividade Avaliativa — Inicialização do Windows e Diagnóstico de Falhas de Boot"
+        data-header-title="GSO I — Inicialização do Windows e Diagnóstico de Falhas de Boot"
+        data-header-subtitle="GSO I • ETEC Hortolândia (1º DSA)"
+        data-header-icon="🖥️"
+        data-school="ETEC HORTOLÂNDIA • 1º DSA"
+        data-default-class="1º DSA - ETEC Hortolândia"></section>
+
+    <div class="activity-guidelines">
+        <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+        <p>Leia atentamente cada cenário e escolha a única alternativa que representa a melhor conduta técnica ou o conceito correto sobre inicialização e diagnóstico do Windows.</p>
+    </div>
+
+    <form id="quizForm" data-pdf-title="Atividade Avaliativa — Inicialização do Windows e Diagnóstico de Falhas de Boot" data-pdf-question-selector=".question-card">
+        
+        <!-- Questão 1 -->
+        <div class="question-card activity-question" id="q1">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 1</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Um colaborador chega à empresa pela manhã, liga o computador e relata que o sistema demora um tempo excessivo apenas na fase final, especificamente na apresentação da área de trabalho e abertura de ícones iniciais. O técnico de suporte, seguindo a metodologia de boot, conclui que:</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q1" value="A"> A) O problema está no firmware da placa-mãe (BIOS/UEFI) que falhou ao ler o setor de inicialização.</label></li>
+                <li><label><input type="radio" name="q1" value="B"> B) Trata-se de uma lentidão pós-login, provavelmente causada por aplicativos ou serviços carregados junto com a inicialização do Windows.</label></li>
+                <li><label><input type="radio" name="q1" value="C"> C) O carregador de inicialização (bootloader) está corrompido, exigindo reparações via WinRE.</label></li>
+                <li><label><input type="radio" name="q1" value="D"> D) O disco de armazenamento queimou completamente, impedindo a leitura do núcleo do sistema operacional.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> O problema ocorre após o usuário logar, o que indica que o kernel e o boot funcionaram. A investigação deve focar em aplicativos de inicialização e serviços em segundo plano.</div>
+        </div>
+
+        <!-- Questão 2 -->
+        <div class="question-card activity-question" id="q2">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 2</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Durante a manutenção de um microcomputador de atendimento, o técnico observa que, ao ligar a máquina, o monitor sequer apresenta imagem ou sinal de vídeo, embora os coolers e os leds da CPU estejam funcionando. Qual área deve ser investigada prioritariamente?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q2" value="A"> A) Configuração do Visualizador de Eventos no Windows.</label></li>
+                <li><label><input type="radio" name="q2" value="B"> B) Aplicativos de inicialização configurados no MSConfig.</label></li>
+                <li><label><input type="radio" name="q2" value="C"> C) Hardware básico, conexões de vídeo, cabos e integridade do monitor ou placa-mãe/firmware.</label></li>
+                <li><label><input type="radio" name="q2" value="D"> D) Desinstalação da última atualização cumulativa do Windows.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> Se o computador nem chega a apresentar imagem na tela, o problema está nas etapas iniciais de hardware ou firmware antes mesmo de carregar o sistema operacional.</div>
+        </div>
+
+        <!-- Questão 3 -->
+        <div class="question-card activity-question" id="q3">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 3</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Para investigar a origem de falhas recorrentes no sistema e verificar registros de eventos passados com carimbo de data e hora, qual comando executado no Prompt de Comando (CMD) abre diretamente a ferramenta nativa de logs do Windows?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q3" value="A"> A) msconfig</label></li>
+                <li><label><input type="radio" name="q3" value="B"> B) eventvwr.msc</label></li>
+                <li><label><input type="radio" name="q3" value="C"> C) cmd /boot</label></li>
+                <li><label><input type="radio" name="q3" value="D"> D) winver</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> O comando <code>eventvwr.msc</code> abre o Visualizador de Eventos do Windows, onde o técnico pode consultar os logs de Sistema e Aplicativos.</div>
+        </div>
+
+        <!-- Questão 4 -->
+        <div class="question-card activity-question" id="q4">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 4</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Ao analisar o Visualizador de Eventos em busca da causa de um travamento recente, o analista de suporte encontra um registro classificado como "Erro" no horário em que o computador foi ligado. Qual deve ser a postura técnica correta diante desse achado?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q4" value="A"> A) Formatar imediatamente a máquina, pois qualquer erro no log indica corrupção irreversível do disco.</label></li>
+                <li><label><input type="radio" name="q4" value="B"> B) Desativar todos os serviços exibidos no MSConfig sem validação prévia.</label></li>
+                <li><label><input type="radio" name="q4" value="C"> C) Correlacionar o carimbo de data/hora do evento com o momento exato da falha e analisar a descrição detalhada para verificar se realmente causou o problema.</label></li>
+                <li><label><input type="radio" name="q4" value="D"> D) Ignorar logs de erro, pois o Windows gera registros automáticos sem utilidade prática para o técnico.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> Encontrar um erro não significa diagnóstico definitivo. É fundamental cruzar o horário do evento com o incidente e analisar a descrição técnica.</div>
+        </div>
+
+        <!-- Questão 5 -->
+        <div class="question-card activity-question" id="q5">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 5</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Um técnico precisa verificar de forma rápida as opções gerais de inicialização do sistema e os atalhos para utilitários administrativos do Windows, sem contudo alterar configurações definitivas naquele momento. Qual utilitário gráfico ele deve abrir digitando seu nome no CMD?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q5" value="A"> A) Gerenciador de Tarefas (taskmgr)</label></li>
+                <li><label><input type="radio" name="q5" value="B"> B) Configuração do Sistema (msconfig)</label></li>
+                <li><label><input type="radio" name="q5" value="C"> C) Painel de Controle clássico</label></li>
+                <li><label><input type="radio" name="q5" value="D"> D) Editor de Registro (regedit)</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> O utilitário MSConfig (Configuração do Sistema) exibe abas como Geral, Inicialização do Sistema, Serviços e Ferramentas.</div>
+        </div>
+
+        <!-- Questão 6 -->
+        <div class="question-card activity-question" id="q6">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 6</span>
+                <h3 class="activity-question-title" data-pdf-prompt>O Modo de Segurança do Windows é um recurso essencial de diagnóstico. Qual é a principal característica lógica que define o seu funcionamento durante o boot?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q6" value="A"> A) Desativa permanentemente a placa de vídeo e o acesso à internet por segurança de rede.</label></li>
+                <li><label><input type="radio" name="q6" value="B"> B) Executa uma varredura antivírus completa antes de permitir o login do usuário.</label></li>
+                <li><label><input type="radio" name="q6" value="C"> C) Inicia o Windows utilizando apenas um conjunto reduzido e essencial de drivers e serviços.</label></li>
+                <li><label><input type="radio" name="q6" value="D"> D) Apaga todos os arquivos temporários criados por atualizações corrompidas.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> O Modo de Segurança carrega um ambiente enxuto com o mínimo de drivers e serviços essenciais, auxiliando a isolar falhas causadas por softwares ou drivers de terceiros.</div>
+        </div>
+
+        <!-- Questão 7 -->
+        <div class="question-card activity-question" id="q7">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 7</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Um computador corporativo começou a apresentar telas azuis (Blue Screen) intermitentes logo após a instalação de um novo driver de controladora de armazenamento fornecido pelo fabricante. Qual procedimento do ambiente de recuperação ou diagnóstico seria o mais adequado para reverter essa falha específica com segurança?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q7" value="A"> A) Aumentar a memória RAM do computador.</label></li>
+                <li><label><input type="radio" name="q7" value="B"> B) Utilizar a Restauração do Sistema para retornar as configurações a um ponto anterior ou inicializar em Modo de Segurança para remover o driver problemático.</label></li>
+                <li><label><input type="radio" name="q7" value="C"> C) Substituir a fonte de alimentação da máquina imediatamente.</label></li>
+                <li><label><input type="radio" name="q7" value="D"> D) Alterar a ordem de boot na BIOS para priorizar a unidade de rede.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> Se um driver causou a falha, o Modo de Segurança ou a Restauração do Sistema são ferramentas ideais para isolar ou desfazer a alteração recente.</div>
+        </div>
+
+        <!-- Questão 8 -->
+        <div class="question-card activity-question" id="q8">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 8</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Quando o sistema operacional falha repetidamente ao iniciar, o Windows pode direcionar o usuário para o Ambiente de Recuperação do Windows (WinRE). Qual das opções abaixo NÃO faz parte das ferramentas comuns de recuperação encontradas nesse ambiente?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q8" value="A"> A) Reparo de Inicialização.</label></li>
+                <li><label><input type="radio" name="q8" value="B"> B) Restauração do Sistema.</label></li>
+                <li><label><input type="radio" name="q8" value="C"> C) Desinstalação de atualizações recentes.</label></li>
+                <li><label><input type="radio" name="q8" value="D"> D) Editor direto de partições avançadas de disco rígido com formatação completa de fábrica.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> O WinRE oferece ferramentas de reparo, restauração e desinstalação de updates, mas não é um particionador/formatador completo de fábrica integrado como ferramenta principal de boot.</div>
+        </div>
+
+        <!-- Questão 9 -->
+        <div class="question-card activity-question" id="q9">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 9</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Durante uma aula prática de suporte, um aluno sugere desativar aleatoriamente diversos serviços desconhecidos na aba "Serviços" do MSConfig para ver se o computador acelera. Com base na conduta profissional ensinada, como o professor deve orientar o aluno?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q9" value="A"> A) Apoiar a ideia, pois desativar serviços do sistema nunca traz prejuízos operacionais.</label></li>
+                <li><label><input type="radio" name="q9" value="B"> B) Alertar que alterações incorretas ou desativação de componentes necessários podem impedir que serviços essenciais do Windows sejam carregados, travando o boot.</label></li>
+                <li><label><input type="radio" name="q9" value="C"> C) Sugerir que desative também todos os drivers essenciais da placa-mãe para otimizar o desempenho.</label></li>
+                <li><label><input type="radio" name="q9" value="D"> D) Explicar que o MSConfig só aceita alterações se o usuário possuir privilégios de convidado.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> Modificações em serviços de sistema sem planejamento podem quebrar dependências essenciais e impedir a inicialização correta do sistema operacional.</div>
+        </div>
+
+        <!-- Questão 10 -->
+        <div class="question-card activity-question" id="q10">
+            <div class="activity-question-heading">
+                <span class="activity-question-number">Questão 10</span>
+                <h3 class="activity-question-title" data-pdf-prompt>Qual sequência lógica resume perfeitamente a abordagem profissional ideal de um técnico de suporte ao diagnosticar uma falha complexa de inicialização no Windows?</h3>
+            </div>
+            <ul class="options-list">
+                <li><label><input type="radio" name="q10" value="A"> A) Formatação imediata → Instalação de softwares aleatórios → Entrega ao cliente.</label></li>
+                <li><label><input type="radio" name="q10" value="B"> B) Troca física do processador → Teste de memória → Substituição de placa de vídeo.</label></li>
+                <li><label><input type="radio" name="q10" value="C"> C) Identificação do sintoma → Localização da etapa da falha → Consulta de registros (logs) → Formulação de hipótese → Teste controlado → Correção planejada.</label></li>
+                <li><label><input type="radio" name="q10" value="D"> D) Alteração randômica de chaves no Registro do Windows → Reinicialização forçada.</label></li>
+            </ul>
+            <div class="explanation"><strong>Explicação:</strong> O diagnóstico estruturado exige método: analisar o sintoma, mapear a etapa do boot, consultar evidências em logs, formular hipóteses e testar de forma controlada.</div>
+        </div>
+
+    </form>
+
+    <section class="finalization-card" aria-labelledby="finalization-title">
+        <div class="finalization-heading">
+            <span class="finalization-label">Finalização</span>
+            <h2 id="finalization-title">Síntese do Diagnóstico</h2>
+        </div>
+        <p>Confira suas respostas e revise as explicações para consolidar o aprendizado sobre inicialização e diagnóstico do Windows.</p>
+        <div class="actions">
+            <button type="button" class="btn" id="gradeButton" onclick="corrigirProva()">Verificar Respostas e Desempenho</button>
+        </div>
+        <div class="feedback" id="feedbackGlobal" aria-live="polite"></div>
+    </section>
+</main>
+
+<footer class="page-footer no-print">
+    <p>ETEC Hortolândia • Centro Paula Souza • Curso Técnico em Desenvolvimento de Sistemas</p>
+    <p class="mt-1 text-slate-500">Disciplina: Gestão de Sistemas Operacionais I (GSO I)</p>
+</footer>
+
+<script>
+    const gabarito = {
+        q1: 'B',
+        q2: 'C',
+        q3: 'B',
+        q4: 'C',
+        q5: 'B',
+        q6: 'C',
+        q7: 'B',
+        q8: 'D',
+        q9: 'B',
+        q10: 'C'
+    };
+
+    let provaVerificada = false;
+
+    function corrigirProva() {
+        if (provaVerificada) return;
+        if (!window.confirm('Ao verificar, suas respostas serão bloqueadas. Deseja continuar?')) return;
+
+        provaVerificada = true;
+        let acertos = 0;
+        let total = Object.keys(gabarito).length;
+        let respondidas = 0;
+
+        for (let questao in gabarito) {
+            const alternativas = document.getElementsByName(questao);
+            let selecionada = null;
+            
+            // Limpa estilos anteriores
+            alternativas.forEach(alt => {
+                const label = alt.parentElement;
+                label.classList.remove('correct-option', 'incorrect-option');
+                if (alt.checked) {
+                    selecionada = alt.value;
+                }
+            });
+
+            const card = document.getElementById(questao);
+            const explanation = card.querySelector('.explanation');
+            explanation.style.display = 'block';
+
+            if (selecionada !== null) {
+                respondidas++;
+                alternativas.forEach(alt => {
+                    const label = alt.parentElement;
+                    if (alt.value === gabarito[questao]) {
+                        label.classList.add('correct-option');
+                    } else if (alt.checked && alt.value !== gabarito[questao]) {
+                        label.classList.add('incorrect-option');
+                    }
+                });
+
+                if (selecionada === gabarito[questao]) {
+                    acertos++;
+                }
+            } else {
+                // Se não respondeu, destaca a correta mesmo assim
+                alternativas.forEach(alt => {
+                    if (alt.value === gabarito[questao]) {
+                        alt.parentElement.classList.add('correct-option');
+                    }
+                });
+            }
+        }
+
+        const feedbackDiv = document.getElementById('feedbackGlobal');
+        feedbackDiv.style.display = 'block';
+        
+        let percentual = Math.round((acertos / total) * 100);
+        if (respondidas < total) {
+            feedbackDiv.style.backgroundColor = '#fef3c7';
+            feedbackDiv.style.color = '#b45309';
+            feedbackDiv.innerHTML = `⚠️ Você respondeu ${respondidas} de ${total} questões. Sua pontuação parcial foi de <strong>${acertos} acertos (${percentual}%)</strong>. As respostas corretas e explicações foram destacadas abaixo.`;
+        } else if (acertos >= 7) {
+            feedbackDiv.style.backgroundColor = '#dcfce7';
+            feedbackDiv.style.color = '#166534';
+            feedbackDiv.innerHTML = `🎉 Excelente! Você acertou <strong>${acertos} de ${total} questões (${percentual}%)</strong>. Parabéns pela fixação dos conceitos de inicialização e diagnóstico de boot!`;
+        } else {
+            feedbackDiv.style.backgroundColor = '#fee2e2';
+            feedbackDiv.style.color = '#991b1b';
+            feedbackDiv.innerHTML = `📚 Você acertou <strong>${acertos} de ${total} questões (${percentual}%)</strong>. Revise os pontos principais da aula (Visualizador de Eventos, Modo de Segurança e Etapas de Boot) para fortalecer seu aprendizado.`;
+        }
+
+        // Rola até o feedback
+        document.querySelectorAll('#quizForm input[type="radio"]').forEach(alternativa => {
+            alternativa.disabled = true;
+        });
+        document.getElementById('gradeButton').disabled = true;
+        feedbackDiv.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('quizForm').addEventListener('reset', () => {
+        window.setTimeout(() => {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.querySelector('.explanation').style.display = 'none';
+                card.querySelectorAll('label').forEach(label => {
+                    label.classList.remove('correct-option', 'incorrect-option');
+                });
+            });
+
+            document.querySelectorAll('#quizForm input[type="radio"]').forEach(alternativa => {
+                alternativa.disabled = false;
+            });
+            document.getElementById('gradeButton').disabled = false;
+            provaVerificada = false;
+
+            const feedbackDiv = document.getElementById('feedbackGlobal');
+            feedbackDiv.style.display = 'none';
+            feedbackDiv.style.backgroundColor = '';
+            feedbackDiv.style.color = '';
+            feedbackDiv.textContent = '';
+        }, 0);
+    });
+</script>
+
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
+</body>
+</html>

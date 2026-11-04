@@ -65,7 +65,11 @@
 
   const buildQuestion = (question, index) => {
     const prompt = question.querySelector("[data-pdf-prompt], h3, .question p");
-    const title = prompt ? prompt.textContent.trim() : "Questão " + (index + 1);
+    const number = question.querySelector(".activity-question-number");
+    const promptTitle = prompt ? prompt.textContent.trim() : "Questão " + (index + 1);
+    const title = number
+      ? number.textContent.trim() + " — " + promptTitle
+      : promptTitle;
     const answers = readAnswers(question);
     const answerMarkup = answers.length
       ? answers.map(({ label, answer }) =>
