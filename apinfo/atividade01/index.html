@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avaliação — Aplicativos Informatizados</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  label.option {
+    display: block;
+    border: 1px solid #d8deea;
+    padding: 12px;
+    border-radius: 9px;
+    margin: 9px 0;
+    cursor: pointer;
+  }
+  label.option:has(input:checked) {
+    border-color: #4267bb;
+    background: #edf2ff;
+  }
+  input { margin-right: 8px; }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .feedback { padding: 10px; border-radius: 8px; margin: 10px 0; }
+  .correct { background: #e2f6e9; }
+  .wrong { background: #fff0e8; }
+  .page-footer {
+    background: #0f172a;
+    color: #94a3b8;
+    font-size: 0.75rem;
+    padding: 24px 16px;
+    text-align: center;
+  }
+  .page-footer p { margin: 0; }
+  .page-footer p + p {
+    color: #64748b;
+    margin-top: 4px;
+  }
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+  }
+  @media print {
+    .page-footer { display: none; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <section data-activity-identification
+    data-course="Aplicativos Informatizados"
+    data-topic="Internet, computação em nuvem, Drive, OneDrive, sincronização, backup e segurança digital"
+    data-activity-title="Avaliação — Aplicativos Informatizados"
+    data-header-title="Avaliação: Aplicativos Informatizados"
+    data-header-subtitle="Aplicativos Informatizados • ETEC Hortolândia (1º ADM - GB)"
+    data-header-icon="💻"
+    data-school="ETEC HORTOLÂNDIA • 1º ADM - GB"
+    data-default-class="1º ADM - GB"></section>
+
+  <section class="card activity-guidelines">
+    <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+    <ol>
+      <li>Leia cada questão e escolha apenas uma alternativa.</li>
+      <li>A avaliação contém 15 questões. Cada resposta correta vale 1 ponto.</li>
+    </ol>
+  </section>
+
+  <form id="quiz" class="card" data-pdf-title="Avaliação — Aplicativos Informatizados">
+    <div id="questions"></div>
+    <button id="checkAnswers" class="primary" type="submit">Verificar respostas</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer class="page-footer no-print">
+  <p>ETEC Hortolândia • Centro Paula Souza • Curso Técnico em Desenvolvimento de Sistemas</p>
+  <p>Disciplina: Aplicativos Informatizados</p>
+</footer>
+
+<script>
+const questions = [
+  {
+    q: "1. Uma empresa utiliza diferentes sistemas para realizar atividades administrativas. Para acessar um sistema de controle de estoque disponibilizado pela organização, uma funcionária abre um navegador e informa o endereço eletrônico correspondente. Nesse contexto, o navegador é:",
+    options: [
+      "Um serviço responsável por armazenar arquivos em servidores remotos.",
+      "Um protocolo utilizado para transferir mensagens entre computadores.",
+      "Um sistema operacional responsável por controlar os recursos do computador.",
+      "Um programa utilizado para acessar e visualizar páginas e serviços da Web.",
+      "Uma ferramenta destinada exclusivamente à criação de documentos digitais."
+    ],
+    answer: 3,
+    explanation: "O navegador é um programa usado para acessar e exibir páginas e serviços disponíveis na Web."
+  },
+  {
+    q: "2. Durante uma reunião, um funcionário afirma que Internet e Web são termos que representam exatamente a mesma tecnologia. Considerando os conceitos estudados, a relação correta entre eles é:",
+    options: [
+      "A Web é uma rede física que conecta computadores em diferentes países.",
+      "A Internet é a rede mundial, enquanto a Web é um dos serviços que utiliza essa rede.",
+      "A Web é um sistema operacional que permite conectar computadores à Internet.",
+      "A Internet é um serviço que funciona exclusivamente dentro dos navegadores.",
+      "A Internet é um aplicativo usado para acessar páginas e documentos eletrônicos."
+    ],
+    answer: 1,
+    explanation: "A Internet é a rede que conecta dispositivos; a Web é um dos serviços que funciona sobre essa rede."
+  },
+  {
+    q: "3. Uma colaboradora precisa acessar o portal de uma instituição para consultar informações e preencher um formulário. Para isso, ela utiliza um endereço eletrônico no navegador. Esse endereço, conhecido como URL, serve para:",
+    options: [
+      "Definir a senha utilizada para acessar uma conta institucional.",
+      "Armazenar automaticamente cópias de segurança dos arquivos consultados.",
+      "Controlar a velocidade de conexão entre o computador e o servidor.",
+      "Substituir os programas necessários para abrir documentos digitais.",
+      "Identificar a localização de um recurso ou serviço disponível na rede."
+    ],
+    answer: 4,
+    explanation: "A URL identifica o endereço em que um recurso ou serviço pode ser encontrado na rede."
+  },
+  {
+    q: "4. Ao acessar um sistema administrativo, um funcionário observa que o endereço começa com HTTPS. Esse recurso indica que:",
+    options: [
+      "O site pertence necessariamente a uma instituição pública reconhecida.",
+      "O conteúdo apresentado foi revisado por especialistas da área.",
+      "A conexão utiliza mecanismos de proteção para transmitir os dados.",
+      "O computador está protegido contra qualquer tipo de ameaça digital.",
+      "As informações consultadas serão armazenadas como cópia de segurança."
+    ],
+    answer: 2,
+    explanation: "HTTPS protege a comunicação entre o navegador e o site, mas não garante que o site seja confiável nem que o computador esteja livre de ameaças."
+  },
+  {
+    q: "5. Uma organização deseja que seus funcionários acessem documentos de trabalho mesmo quando utilizam computadores diferentes. Para isso, considera utilizar um serviço de armazenamento em nuvem. Essa tecnologia permite:",
+    options: [
+      "Guardar arquivos em servidores acessíveis pela rede, conforme as permissões.",
+      "Executar todos os programas sem necessidade de conexão com a Internet.",
+      "Impedir que documentos sejam alterados após o primeiro compartilhamento.",
+      "Armazenar arquivos somente no computador em que foram criados.",
+      "Eliminar a necessidade de organizar pastas e nomes de documentos."
+    ],
+    answer: 0,
+    explanation: "O armazenamento em nuvem mantém arquivos em servidores acessíveis pela rede, respeitando as permissões configuradas."
+  },
+  {
+    q: "6. Uma equipe administrativa utiliza o Google Drive para armazenar planilhas, comunicados e materiais de treinamento. Uma das vantagens desse serviço é:",
+    options: [
+      "Garantir que todos os arquivos sejam acessados sem qualquer autenticação.",
+      "Impedir que usuários autorizados trabalhem no mesmo documento.",
+      "Substituir integralmente os sistemas operacionais dos computadores.",
+      "Permitir o armazenamento e o compartilhamento de arquivos pela Internet.",
+      "Fazer com que todos os documentos sejam publicados para qualquer pessoa."
+    ],
+    answer: 3,
+    explanation: "O Google Drive permite armazenar e compartilhar arquivos pela Internet com as permissões apropriadas."
+  },
+  {
+    q: "7. Uma instituição utiliza o OneDrive para disponibilizar documentos aos seus colaboradores. Sobre esse serviço, é correto afirmar que:",
+    options: [
+      "É um navegador desenvolvido para acessar exclusivamente páginas institucionais.",
+      "É uma ferramenta de armazenamento em nuvem integrada ao ecossistema Microsoft.",
+      "É um antivírus destinado a bloquear arquivos recebidos por e-mail.",
+      "É um sistema operacional utilizado para administrar redes corporativas.",
+      "É um programa que funciona apenas para criar apresentações de slides."
+    ],
+    answer: 1,
+    explanation: "O OneDrive é o serviço de armazenamento em nuvem da Microsoft e se integra aos serviços desse ecossistema."
+  },
+  {
+    q: "8. Um funcionário organiza os documentos de um treinamento em uma pasta principal, com subpastas para materiais, relatórios e comunicados. Essa prática contribui principalmente para:",
+    options: [
+      "Aumentar automaticamente o espaço disponível na conta de armazenamento.",
+      "Impedir que os documentos sejam compartilhados com outros funcionários.",
+      "Garantir que todos os arquivos estejam protegidos contra exclusão.",
+      "Eliminar a necessidade de utilizar nomes descritivos nos documentos.",
+      "Facilitar a localização, a organização e o gerenciamento dos arquivos."
+    ],
+    answer: 4,
+    explanation: "Pastas e subpastas organizadas ajudam a localizar e gerenciar os documentos."
+  },
+  {
+    q: "9. Uma supervisora precisa compartilhar uma planilha com os integrantes de sua equipe. Alguns devem apenas consultar os dados, enquanto outros precisam atualizar informações. A forma mais adequada de realizar esse compartilhamento é:",
+    options: [
+      "Enviar o mesmo arquivo a todos, sem indicar quais alterações são permitidas.",
+      "Publicar a planilha na Internet para facilitar o acesso de toda a equipe.",
+      "Conceder permissões diferentes conforme as atividades de cada integrante.",
+      "Criar uma cópia impressa para cada integrante e recolher as atualizações.",
+      "Utilizar uma única senha compartilhada para todos os colaboradores."
+    ],
+    answer: 2,
+    explanation: "As permissões devem corresponder às necessidades de cada pessoa, como visualizar ou editar."
+  },
+  {
+    q: "10. Durante a elaboração de um relatório, duas funcionárias editam o mesmo documento armazenado na nuvem. Esse recurso de colaboração permite:",
+    options: [
+      "Trabalhar conjuntamente no arquivo, conforme os recursos e permissões disponíveis.",
+      "Impedir que qualquer pessoa visualize as alterações feitas pelas colegas.",
+      "Garantir que cada funcionária trabalhe em um arquivo totalmente independente.",
+      "Transformar automaticamente o documento em uma cópia de segurança permanente.",
+      "Bloquear o acesso ao documento sempre que uma usuária estiver editando."
+    ],
+    answer: 0,
+    explanation: "A edição colaborativa permite que usuários autorizados trabalhem no mesmo documento, conforme os recursos do serviço."
+  },
+  {
+    q: "11. Um funcionário salva um documento no computador e utiliza um serviço de sincronização para manter uma cópia atualizada na nuvem. A sincronização tem como finalidade:",
+    options: [
+      "Criar uma versão impressa do documento sempre que ele for modificado.",
+      "Impedir que alterações realizadas em um dispositivo sejam compartilhadas.",
+      "Excluir automaticamente os arquivos antigos de todos os dispositivos.",
+      "Manter arquivos correspondentes atualizados entre locais ou dispositivos conectados.",
+      "Garantir que os documentos nunca sejam modificados por outros usuários."
+    ],
+    answer: 3,
+    explanation: "A sincronização mantém versões correspondentes dos arquivos atualizadas entre os locais ou dispositivos conectados."
+  },
+  {
+    q: "12. Uma colaboradora percebe que um arquivo excluído de seu computador também desapareceu da pasta sincronizada na nuvem. Esse comportamento demonstra que:",
+    options: [
+      "A nuvem sempre mantém todos os arquivos excluídos de forma permanente.",
+      "A sincronização pode propagar alterações e exclusões entre os locais conectados.",
+      "A sincronização funciona somente quando os arquivos são documentos de texto.",
+      "O backup e a sincronização são recursos que possuem exatamente a mesma finalidade.",
+      "Os arquivos armazenados na nuvem não podem ser recuperados após uma exclusão."
+    ],
+    answer: 1,
+    explanation: "Como alterações e exclusões podem ser propagadas pela sincronização, ela não substitui um backup independente."
+  },
+  {
+    q: "13. Uma empresa deseja manter cópias de documentos importantes para recuperá-los caso os arquivos originais sejam perdidos ou danificados. Essa prática corresponde a:",
+    options: [
+      "Compartilhar os documentos com todos os funcionários da organização.",
+      "Sincronizar os arquivos entre diferentes dispositivos de trabalho.",
+      "Renomear os documentos para facilitar a identificação das versões.",
+      "Transferir os arquivos para uma pasta diferente no mesmo computador.",
+      "Realizar backup periódico dos dados considerados importantes."
+    ],
+    answer: 4,
+    explanation: "O backup mantém cópias de segurança que podem ser usadas para recuperar dados perdidos ou danificados."
+  },
+  {
+    q: "14. Um funcionário recebe uma mensagem informando que sua conta será bloqueada e solicitando que ele acesse um link para confirmar a senha. A mensagem apresenta características de uma tentativa de phishing. A atitude mais adequada é:",
+    options: [
+      "Acessar o link rapidamente para impedir o bloqueio da conta institucional.",
+      "Responder à mensagem solicitando que o remetente confirme sua identidade.",
+      "Verificar a mensagem por canais oficiais e evitar acessar o link suspeito.",
+      "Encaminhar a mensagem aos colegas para que todos atualizem suas senhas.",
+      "Informar os dados solicitados caso a mensagem apresente o logotipo da empresa."
+    ],
+    answer: 2,
+    explanation: "Mensagens suspeitas devem ser verificadas por canais oficiais; não se deve acessar links nem informar senhas."
+  },
+  {
+    q: "15. Uma funcionária de Recursos Humanos precisa armazenar uma planilha com informações pessoais e salariais dos colaboradores. Considerando a segurança e a privacidade dos dados, a prática mais adequada é:",
+    options: [
+      "Compartilhar o arquivo por link público para facilitar o acesso dos gestores.",
+      "Manter a planilha em uma pasta comum, sem definir níveis de acesso.",
+      "Enviar o documento para todos os funcionários para evitar solicitações futuras.",
+      "Restringir o acesso aos profissionais autorizados e utilizar permissões apropriadas.",
+      "Utilizar uma senha simples para que os responsáveis não tenham dificuldade de acesso."
+    ],
+    answer: 3,
+    explanation: "Dados pessoais e salariais devem ter acesso restrito a profissionais autorizados, com permissões apropriadas."
+  }
+];
+
+const container = document.getElementById("questions");
+const letters = ["A", "B", "C", "D", "E"];
+let quizChecked = false;
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question activity-question";
+  section.dataset.pdfQuestion = "";
+
+  const heading = document.createElement("div");
+  heading.className = "activity-question-heading";
+  const number = document.createElement("span");
+  number.className = "activity-question-number";
+  number.textContent = "Questão " + (i + 1);
+
+  const title = document.createElement("p");
+  title.className = "activity-question-title";
+  title.textContent = item.q.replace(/^\d+\.\s*/, "");
+  heading.appendChild(number);
+  heading.appendChild(title);
+  section.appendChild(heading);
+
+  item.options.forEach((option, j) => {
+    const label = document.createElement("label");
+    label.className = "option activity-question-option";
+
+    const input = document.createElement("input");
+    input.type = "radio";
+    input.name = "q" + i;
+    input.value = j;
+
+    label.appendChild(input);
+    label.appendChild(document.createTextNode(letters[j] + ") " + option));
+    section.appendChild(label);
+  });
+
+  container.appendChild(section);
+});
+
+document.getElementById("quiz").addEventListener("submit", event => {
+  event.preventDefault();
+  if (quizChecked) return;
+  if (!window.confirm("Ao verificar, suas respostas serão bloqueadas. Deseja continuar?")) return;
+
+  quizChecked = true;
+  let score = 0;
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  questions.forEach((item, i) => {
+    const selected = document.querySelector('input[name="q' + i + '"]:checked');
+    const isCorrect = selected !== null && Number(selected.value) === item.answer;
+    if (isCorrect) score++;
+
+    const feedback = document.createElement("div");
+    feedback.className = "feedback " + (isCorrect ? "correct" : "wrong");
+
+    const status = document.createElement("strong");
+    status.textContent = "Questão " + (i + 1) + ": " +
+      (isCorrect ? "Correta!" : "Incorreta.");
+    feedback.appendChild(status);
+
+    if (!isCorrect) {
+      const correctAnswer = document.createElement("p");
+      correctAnswer.textContent = "Resposta correta: " +
+        letters[item.answer] + ") " + item.options[item.answer];
+      feedback.appendChild(correctAnswer);
+    }
+
+    const explanation = document.createElement("p");
+    explanation.textContent = item.explanation;
+    feedback.appendChild(explanation);
+    result.appendChild(feedback);
+  });
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Resultado: " + score + "/15 pontos";
+  result.prepend(heading);
+
+  const summary = document.createElement("p");
+  summary.textContent = "Você acertou " + score + " de " +
+    questions.length + " questões.";
+  heading.after(summary);
+
+  result.style.display = "block";
+  document.querySelectorAll('#quiz input[type="radio"]').forEach(input => {
+    input.disabled = true;
+  });
+  document.getElementById("checkAnswers").disabled = true;
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("quiz").addEventListener("reset", () => {
+  window.setTimeout(() => {
+    const result = document.getElementById("result");
+    result.style.display = "none";
+    result.replaceChildren();
+    document.querySelectorAll('#quiz input[type="radio"]').forEach(input => {
+      input.disabled = false;
+    });
+    document.getElementById("checkAnswers").disabled = false;
+    quizChecked = false;
+  }, 0);
+});
+</script>
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
+</body>
+</html>
