@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade 03 — Planejamento de TCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  header {
+    background: #1c2c5b;
+    color: white;
+    padding: 28px 18px;
+    text-align: center;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  .question { margin-bottom: 28px; }
+  .question p { font-weight: bold; }
+  textarea {
+    display: block;
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border: 1px solid #d8deea;
+    border-radius: 9px;
+    font: inherit;
+    resize: vertical;
+  }
+  textarea:focus {
+    outline: 2px solid #4267bb;
+    outline-offset: 2px;
+  }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .response {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: #edf2ff;
+  }
+  .response-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<main>
+  <section data-activity-identification
+    data-course="Planejamento de TCC (PTCC)"
+    data-topic="Atualização do plano e preparação para a finalização do TCC"
+    data-activity-title="Atividade 03 — Atualização do planejamento de TCC"
+    data-header-title="Atividade Prática: Planejamento de TCC"
+    data-header-subtitle="PTCC • ETEC Hortolândia (2º DSA)"
+    data-header-icon="📋"
+    data-school="ETEC HORTOLÂNDIA • 2º DSA"
+    data-default-class="2º DSA - ETEC Hortolândia"></section>
+
+  <section class="card activity-guidelines">
+    <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+    <ol>
+      <li>Retomem as atividades anteriores e atualizem o planejamento com a situação atual do TCC. Em cada resposta, diferenciem o que foi concluído, está em andamento e ainda precisa ser feito.</li>
+      <li>São 10 questões discursivas para orientar a reta final do projeto. Registrem ajustes e dúvidas que precisam ser discutidos com o orientador.</li>
+    </ol>
+  </section>
+
+  <form id="activity" class="card" data-pdf-title="Atividade 03 — Planejamento de TCC">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Finalizar atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    q: "1. Retomando o tema, o problema e os objetivos definidos nas atividades anteriores, em que etapa o TCC está agora? Resumam o que já foi concluído e o que segue em andamento.",
+    placeholder: "Etapa atual, entregas concluídas e atividades em andamento..."
+  },
+  {
+    q: "2. O tema, o problema, os objetivos ou o escopo precisaram mudar desde o planejamento inicial? Descrevam os ajustes, expliquem os motivos e indiquem se precisam validá-los com o orientador.",
+    placeholder: "Ajustes feitos ou necessários e seus motivos..."
+  },
+  {
+    q: "3. Qual metodologia o grupo está aplicando ou pretende aplicar para responder ao problema? Avaliem se ela continua viável no tempo restante e indiquem o que precisa ser concluído.",
+    placeholder: "Metodologia, adequação ao prazo e pendências..."
+  },
+  {
+    q: "4. Como está a coleta de informações, dados ou requisitos do projeto? Indiquem as fontes ou os instrumentos utilizados e o que ainda falta obter, consultar ou organizar.",
+    placeholder: "Fontes, instrumentos e situação da coleta..."
+  },
+  {
+    q: "5. Como o grupo vai organizar e analisar as informações ou avaliar o produto desenvolvido para verificar se os objetivos estão sendo atendidos?",
+    placeholder: "Critérios e procedimentos de análise ou avaliação..."
+  },
+  {
+    q: "6. Qual é a situação atual do produto ou resultado esperado do TCC? Comparem o que já existe com os requisitos e critérios definidos e apontem as principais lacunas.",
+    placeholder: "Resultado atual, critérios atendidos e lacunas..."
+  },
+  {
+    q: "7. Que testes, validações ou avaliações ainda precisam ser feitos com o projeto ou com seu público? Como o grupo pretende registrar os resultados e decidir se serão necessários ajustes?",
+    placeholder: "Validações pendentes, participantes e registro dos resultados..."
+  },
+  {
+    q: "8. Quais tarefas ainda faltam até a entrega final? Organizem-nas por prioridade, responsável e prazo, considerando o calendário da disciplina.",
+    placeholder: "Tarefa prioritária, responsável e prazo..."
+  },
+  {
+    q: "9. Qual é o principal risco para concluir o TCC no prazo e com qualidade? Definam uma ação preventiva e uma alternativa caso o risco aconteça.",
+    placeholder: "Risco, prevenção e plano alternativo..."
+  },
+  {
+    q: "10. Como o grupo vai preparar a entrega e a apresentação final do TCC? Indiquem os materiais que precisam revisar ou produzir, como dividirão a apresentação e qual será o próximo passo imediato.",
+    placeholder: "Preparação da entrega, divisão da apresentação e próximo passo..."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "question activity-question";
+  section.dataset.pdfQuestion = "";
+
+  const heading = document.createElement("div");
+  heading.className = "activity-question-heading";
+  const number = document.createElement("span");
+  number.className = "activity-question-number";
+  number.textContent = "Questão " + (i + 1);
+
+  const title = document.createElement("p");
+  title.className = "activity-question-title";
+  title.textContent = item.q.replace(/^\d+\.\s*/, "");
+  heading.appendChild(number);
+  heading.appendChild(title);
+  section.appendChild(heading);
+
+  const label = document.createElement("label");
+  label.htmlFor = "q" + i;
+  label.textContent = "Atualização do grupo";
+
+  const textarea = document.createElement("textarea");
+  textarea.className = "auto-expand";
+  textarea.id = "q" + i;
+  textarea.name = "q" + i;
+  textarea.placeholder = item.placeholder;
+  textarea.required = true;
+  textarea.maxLength = 2000;
+
+  section.appendChild(label);
+  section.appendChild(textarea);
+  container.appendChild(section);
+});
+
+document.getElementById("activity").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Atualização do TCC registrada";
+  result.appendChild(heading);
+
+  const description = document.createElement("p");
+  description.textContent = "Confiram se as pendências, as prioridades e os prazos estão alinhados à entrega e à apresentação final.";
+  result.appendChild(description);
+
+  questions.forEach((item, i) => {
+    const response = document.createElement("div");
+    response.className = "response";
+
+    const title = document.createElement("strong");
+    title.textContent = "Questão " + (i + 1);
+
+    const text = document.createElement("p");
+    text.className = "response-text";
+    text.textContent = document.getElementById("q" + i).value.trim();
+
+    response.appendChild(title);
+    response.appendChild(text);
+    result.appendChild(response);
+  });
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("activity").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.replaceChildren();
+});
+</script>
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
+</body>
+</html>
