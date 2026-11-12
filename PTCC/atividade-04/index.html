@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade 04 — Planejamento de TCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .response {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: #edf2ff;
+  }
+  .response-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<main>
+  <section data-activity-identification
+    data-course="Planejamento de TCC (PTCC)"
+    data-topic="Amadurecimento do projeto, próximos passos e contribuição individual"
+    data-activity-title="Atividade 04 — Amadurecimento do projeto e contribuição individual"
+    data-header-title="Atividade Prática: Planejamento de TCC"
+    data-header-subtitle="PTCC • ETEC Hortolândia (2º DSA)"
+    data-header-icon="📋"
+    data-school="ETEC HORTOLÂNDIA • 2º DSA"
+    data-default-class="2º DSA - ETEC Hortolândia"></section>
+
+  <section class="card activity-guidelines">
+    <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+    <ol>
+      <li>Respondam à primeira questão em grupo, considerando o percurso do projeto desde a escolha do tema. Sejam específicos sobre decisões, mudanças, dificuldades, definições e pendências.</li>
+      <li>Respondam à segunda questão individualmente. Cada integrante deve registrar sua própria resposta, refletindo sobre autonomia, conhecimentos a desenvolver e contribuição pessoal.</li>
+    </ol>
+  </section>
+
+  <form id="activity" class="card" data-pdf-title="Atividade 04 — Amadurecimento do projeto e contribuição individual">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Finalizar atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    q: "Questão em grupo: considerando o caminho percorrido até aqui — da escolha do tema à estruturação inicial da proposta —, como vocês avaliam o desenvolvimento do projeto? Discutam as decisões tomadas, as mudanças de direção, as dificuldades encontradas, o que já conseguiram definir e o que ainda precisa ser resolvido. Além de descrever o projeto, avaliem se a proposta está amadurecendo e indiquem os próximos passos necessários para transformá-la em um TCC viável.",
+    label: "Resposta do grupo",
+    placeholder: "Decisões, mudanças, dificuldades, definições, pendências e próximos passos..."
+  },
+  {
+    q: "Questão individual: imagine que precisasse continuar o desenvolvimento deste projeto sem os demais integrantes do grupo. Você teria condições de explicar, defender e dar continuidade à proposta? Apresente sua visão sobre a importância do projeto, o que acredita que pode melhorar, os conhecimentos que ainda precisa adquirir e a contribuição pessoal que pretende deixar no resultado final.",
+    label: "Resposta individual",
+    placeholder: "Sua visão sobre o projeto, pontos a melhorar, conhecimentos a adquirir e contribuição pessoal..."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "activity-question";
+  section.dataset.pdfQuestion = "";
+
+  const heading = document.createElement("div");
+  heading.className = "activity-question-heading";
+  const number = document.createElement("span");
+  number.className = "activity-question-number";
+  number.textContent = "Questão " + (i + 1);
+
+  const title = document.createElement("p");
+  title.className = "activity-question-title";
+  title.textContent = item.q;
+  heading.appendChild(number);
+  heading.appendChild(title);
+  section.appendChild(heading);
+
+  const label = document.createElement("label");
+  label.htmlFor = "q" + i;
+  label.textContent = item.label;
+
+  const textarea = document.createElement("textarea");
+  textarea.className = "auto-expand";
+  textarea.id = "q" + i;
+  textarea.name = "q" + i;
+  textarea.placeholder = item.placeholder;
+  textarea.required = true;
+  textarea.maxLength = 4000;
+
+  section.appendChild(label);
+  section.appendChild(textarea);
+  container.appendChild(section);
+});
+
+document.getElementById("activity").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Reflexões sobre o projeto registradas";
+  result.appendChild(heading);
+
+  const description = document.createElement("p");
+  description.textContent = "Revisem os próximos passos definidos pelo grupo e salvem a resposta individual de cada integrante.";
+  result.appendChild(description);
+
+  questions.forEach((item, i) => {
+    const response = document.createElement("div");
+    response.className = "response";
+
+    const title = document.createElement("strong");
+    title.textContent = "Questão " + (i + 1) + " — " + item.label;
+
+    const text = document.createElement("p");
+    text.className = "response-text";
+    text.textContent = document.getElementById("q" + i).value.trim();
+
+    response.appendChild(title);
+    response.appendChild(text);
+    result.appendChild(response);
+  });
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("activity").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.replaceChildren();
+});
+</script>
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
+</body>
+</html>

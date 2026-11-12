@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atividade 03 — Desenvolvimento de TCC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../../scripts/atividade-identificacao.css">
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f2f5fa;
+    color: #26334b;
+    line-height: 1.6;
+  }
+  main {
+    max-width: 760px;
+    margin: 28px auto;
+    padding: 0 16px;
+  }
+  .card {
+    background: white;
+    padding: 24px;
+    border-radius: 14px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 14px #15264a12;
+  }
+  button {
+    border: 0;
+    border-radius: 9px;
+    padding: 13px 18px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  .primary { background: #1c2c5b; color: white; }
+  .secondary { background: #e8edf6; color: #1c2c5b; }
+  #result { display: none; }
+  .response {
+    padding: 12px;
+    border-radius: 8px;
+    margin: 10px 0;
+    background: #edf2ff;
+  }
+  .response-text { white-space: pre-wrap; overflow-wrap: anywhere; }
+  footer { text-align: center; padding: 22px; color: #68758b; }
+</style>
+</head>
+<body>
+<main>
+  <section data-activity-identification
+    data-course="Desenvolvimento de TCC (DTCC)"
+    data-topic="Preparação final, apresentação e domínio individual do TCC"
+    data-activity-title="Atividade 03 — Preparação final para a apresentação do TCC"
+    data-header-title="Atividade Prática: Desenvolvimento de TCC"
+    data-header-subtitle="DTCC • ETEC Hortolândia (3º DSA)"
+    data-header-icon="📝"
+    data-school="ETEC HORTOLÂNDIA • 3º DSA"
+    data-default-class="3º DSA - ETEC Hortolândia"></section>
+
+  <section class="card activity-guidelines">
+    <h2><span class="activity-guidelines-icon" aria-hidden="true">i</span> Orientações:</h2>
+    <ol>
+      <li>Respondam às questões 1 e 2 em grupo, com informações verificáveis, responsáveis e prazos. Evitem respostas genéricas como “está quase pronto”.</li>
+      <li>Respondam à questão 3 individualmente. Cada integrante deve preencher sua própria reflexão e gerar seu próprio PDF; as respostas do grupo podem ser iguais para todos.</li>
+      <li>Considerem a data real da apresentação. Se algo não puder ser concluído a tempo, indiquem o impacto e a alternativa viável.</li>
+    </ol>
+  </section>
+
+  <form id="activity" class="card" data-pdf-title="Atividade 03 — Preparação final para a apresentação do TCC">
+    <div id="questions"></div>
+    <button class="primary" type="submit">Finalizar atividade</button>
+    <button class="secondary" type="reset">Limpar respostas</button>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+</main>
+
+<footer>Portal de Atividades • Professor Victor</footer>
+
+<script>
+const questions = [
+  {
+    label: "Resposta do grupo",
+    q: "Questão em grupo 1 — Prontidão do projeto: considerando o que será apresentado, o que está efetivamente concluído e o que ainda falta? Para cada entrega ou requisito importante, informem a evidência de que está funcionando ou foi validado, a pendência concreta, quem é responsável e o prazo. Qual é hoje o maior risco de não estar pronto na data da apresentação e qual será o plano alternativo?",
+    placeholder: "Entrega/requisito, evidência, pendência, responsável, prazo, maior risco e plano alternativo..."
+  },
+  {
+    label: "Resposta do grupo",
+    q: "Questão em grupo 2 — Apresentação e defesa: definam a sequência da apresentação, o tempo de cada parte e quem será responsável por cada trecho. Como demonstrarão, com evidências, que o projeto atende ao problema e aos objetivos? Preparem respostas para as três perguntas mais difíceis que a banca ou o professor pode fazer. Se a demonstração ao vivo falhar, o que farão? Indiquem o que será ensaiado, por quem e até quando.",
+    placeholder: "Roteiro, tempo, responsáveis, evidências, três perguntas difíceis, plano para falhas e ensaios..."
+  },
+  {
+    label: "Resposta individual",
+    q: "Questão individual — Domínio e responsabilidade: sem depender da fala dos colegas, explique o problema do TCC, a solução proposta, como ela foi desenvolvida e quais são seus resultados e limitações. Que parte do trabalho você consegue demonstrar e defender com segurança? O que ainda não domina e como vai se preparar antes da apresentação? Identifique uma contribuição concreta sua e o compromisso que assumirá para a etapa final, com prazo.",
+    placeholder: "Problema, solução, desenvolvimento, resultados, limitações, pontos a estudar, contribuição e compromisso com prazo..."
+  }
+];
+
+const container = document.getElementById("questions");
+
+questions.forEach((item, i) => {
+  const section = document.createElement("section");
+  section.className = "activity-question";
+  section.dataset.pdfQuestion = "";
+
+  const heading = document.createElement("div");
+  heading.className = "activity-question-heading";
+  const number = document.createElement("span");
+  number.className = "activity-question-number";
+  number.textContent = "Questão " + (i + 1);
+
+  const title = document.createElement("p");
+  title.className = "activity-question-title";
+  title.textContent = item.q;
+  heading.appendChild(number);
+  heading.appendChild(title);
+  section.appendChild(heading);
+
+  const label = document.createElement("label");
+  label.htmlFor = "q" + i;
+  label.textContent = item.label;
+
+  const textarea = document.createElement("textarea");
+  textarea.className = "auto-expand";
+  textarea.id = "q" + i;
+  textarea.name = "q" + i;
+  textarea.placeholder = item.placeholder;
+  textarea.required = true;
+  textarea.maxLength = 4000;
+
+  section.appendChild(label);
+  section.appendChild(textarea);
+  container.appendChild(section);
+});
+
+document.getElementById("activity").addEventListener("submit", event => {
+  event.preventDefault();
+
+  const result = document.getElementById("result");
+  result.replaceChildren();
+
+  const heading = document.createElement("h2");
+  heading.textContent = "Preparação para a apresentação registrada";
+  result.appendChild(heading);
+
+  const description = document.createElement("p");
+  description.textContent = "Confiram se cada pendência tem responsável e prazo, ensaiem a apresentação e salvem a resposta individual de cada integrante.";
+  result.appendChild(description);
+
+  questions.forEach((item, i) => {
+    const response = document.createElement("div");
+    response.className = "response";
+
+    const title = document.createElement("strong");
+    title.textContent = "Questão " + (i + 1) + " — " + item.label;
+
+    const text = document.createElement("p");
+    text.className = "response-text";
+    text.textContent = document.getElementById("q" + i).value.trim();
+
+    response.appendChild(title);
+    response.appendChild(text);
+    result.appendChild(response);
+  });
+
+  result.style.display = "block";
+  result.scrollIntoView({ behavior: "smooth" });
+});
+
+document.getElementById("activity").addEventListener("reset", () => {
+  const result = document.getElementById("result");
+  result.style.display = "none";
+  result.replaceChildren();
+});
+</script>
+<script src="../../scripts/atividade-identificacao.js"></script>
+<script src="../../scripts/atividade-pdf.js"></script>
+</body>
+</html>
